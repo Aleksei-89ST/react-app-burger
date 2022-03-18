@@ -11,31 +11,38 @@ class Landing extends React.Component {
    const {display} = this.state;
    this.setState({display:!display});
   }
-getTitle = (restaurant) => {
+getTitle = restaurant => {
  const {title , url } = restaurant;
  this.setState({title,url,display:false})
 }
 goToRestaurant = () => {
-  console.log('go to restaurant!')
+  console.log('go to rest')
+const {url} = this.state;
+console.log(url)
+this.props.history.push(`/restaurant/${url}`)
 }
 
   render() {  
     return (
       <div className="restaurant_select">
         <div className="restaurant_select_top">
-          <div onClick={this.displayList} className="restaurant_select_top_header font-effect-outline">
+          <div onClick={this.displayList} className="restaurant_select_top-header font-effect-outline">
             {this.state.title ? this.state.title :'Выбери ресторан'}</div>
+            <div className="arrow_picker">
           <div className="arrow_picker-up"></div>
           <div className="arrow_pecker-down"></div>
+          </div>
         </div>
-        {this.state.display ? <div className="restaurant_select_bottom">
+        {this.state.display ? ( <div className="restaurant_select_bottom">
           <ul>
            { restaurants.map(restaurant => {
-          return <li onClick={() => this.getTitle(restaurant)} key={restaurant.id}>{restaurant.title}</li>
+          return (
+          <li onClick={() => this.getTitle(restaurant)} key={restaurant.id}>{restaurant.title}</li>
+          );    
       })}
           </ul>
-        </div> : null}
-        {this.state.title && !this.state.display ? <button onClick={this.goToRestaurant}>Перейти в ресторан</button> : null}
+        </div> ) : null}
+        {this.state.title && !this.state.display ? (<button onClick={this.goToRestaurant}>Перейти в ресторан</button>) : null}
       </div>
     );
   }
