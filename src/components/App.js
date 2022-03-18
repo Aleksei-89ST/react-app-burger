@@ -4,6 +4,13 @@ import MenuAdmin from "./MenuAdmin";
 import Order from "./Order";
 
 class App extends React.Component {
+  state = {
+    burgers:{},
+    order:{}
+  }
+  addBurger = (burger) => {
+    console.log('addburger', burger)
+  }
   render() {
     return (
       <div className="burger-paradise">
@@ -11,7 +18,7 @@ class App extends React.Component {
           <Header title="Very Hot Burger" />
         </div>
         <Order />
-        <MenuAdmin />
+        <MenuAdmin addBurger={this.addBurger}/>
       </div>
     );
   }
