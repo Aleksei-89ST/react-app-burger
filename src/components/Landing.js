@@ -8,24 +8,34 @@ class Landing extends React.Component {
     url:''
   }
   displayList = () => {
-    console.log('click')
+   const {display} = this.state;
+   this.setState({display:!display});
   }
+getTitle = (restaurant) => {
+ const {title , url } = restaurant;
+ this.setState({title,url,display:false})
+}
+goToRestaurant = () => {
+  console.log('go to restaurant!')
+}
+
   render() {  
     return (
       <div className="restaurant_select">
         <div className="restaurant_select_top">
-          <div onClick={this.displayList} className="restaurant_select_top_header font-effect-outline">Выбери ресторан</div>
+          <div onClick={this.displayList} className="restaurant_select_top_header font-effect-outline">
+            {this.state.title ? this.state.title :'Выбери ресторан'}</div>
           <div className="arrow_picker-up"></div>
           <div className="arrow_pecker-down"></div>
         </div>
-        <div className="restaurant_select_bottom">
+        {this.state.display ? <div className="restaurant_select_bottom">
           <ul>
            { restaurants.map(restaurant => {
-          return <li key={restaurant.id}>{restaurant.title}</li>
+          return <li onClick={() => this.getTitle(restaurant)} key={restaurant.id}>{restaurant.title}</li>
       })}
           </ul>
-        </div>
-        <button>Перейти в ресторан</button>
+        </div> : null}
+        {this.state.title && !this.state.display ? <button onClick={this.goToRestaurant}>Перейти в ресторан</button> : null}
       </div>
     );
   }
