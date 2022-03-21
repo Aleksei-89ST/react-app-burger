@@ -4,12 +4,24 @@ import MenuAdmin from "./MenuAdmin";
 import Order from "./Order";
 import sampleBurgers from "../sample-burgers";
 import Burger from "./Burger";
+import base from "../base";
 
 class App extends React.Component {
   state = {
     burgers: {},
     order: {},
   };
+  //этот ref требуется для получения ссылки на нужный обьект внутри базы данных 
+  componentDidMount () {
+    const {params} = this.props.match;
+  this.ref = base.syncState(`${params.restaurantId}/burgers`, {
+    context:this,
+    state:'burgers'
+  });
+  }
+  componentWillUnmount() {
+    base.removeBinding(this.ref);
+  }
   addBurger = (burger) => {
     //1.Делаем копию объекта state
     const burgers = { ...this.state.burgers };
