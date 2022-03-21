@@ -2,6 +2,7 @@ import React from "react";
 import Header from "./Header";
 import MenuAdmin from "./MenuAdmin";
 import Order from "./Order";
+import sampleBurgers from '../sample-burgers'
 
 class App extends React.Component {
   state = {
@@ -16,6 +17,9 @@ class App extends React.Component {
         //3.Записать наш новый обьект бургерс в state
         this.setState({burgers})
   }
+  loadSampleBurgers = () => {
+    this.setState({burgers:sampleBurgers})
+  }
   render() {
     return (
       <div className="burger-paradise">
@@ -23,7 +27,7 @@ class App extends React.Component {
           <Header title="Very Hot Burger" />
         </div>
         <Order />
-        <MenuAdmin addBurger={this.addBurger}/>
+        <MenuAdmin addBurger={this.addBurger} loadSampleBurgers={this.loadSampleBurgers}/>
       </div>
     );
   }
