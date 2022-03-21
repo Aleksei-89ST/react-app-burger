@@ -11,13 +11,21 @@ class App extends React.Component {
     burgers: {},
     order: {},
   };
-  //этот ref требуется для получения ссылки на нужный обьект внутри базы данных 
-  componentDidMount () {
-    const {params} = this.props.match;
-  this.ref = base.syncState(`${params.restaurantId}/burgers`, {
-    context:this,
-    state:'burgers'
-  });
+  //этот ref требуется для получения ссылки на нужный обьект внутри базы данных
+  componentDidMount() {
+    const { params } = this.props.match;
+    const localStorageRef = localStorage.getItem(params.restaurantId); //метод чтобы получить данные из localStorage
+    if (localStorageRef) {
+      this.setState({ order: JSON.parse(localStorageRef) });
+    }
+    this.ref = base.syncState(`${params.restaurantId}/burgers`, {
+      context: this,
+      state: "burgers",
+    });
+  }
+  componentDidUpdate() {
+    const { params } = this.props.match;
+    localStorage.setItem(params.restaurantId, JSON.stringify(this.state.order));
   }
   componentWillUnmount() {
     base.removeBinding(this.ref);
@@ -59,7 +67,7 @@ class App extends React.Component {
             })}
           </ul>
         </div>
-        <Order burgers={this.state.burgers} order={this.state.order}/>
+        <Order burgers={this.state.burgers} order={this.state.order} />
         <MenuAdmin
           addBurger={this.addBurger}
           loadSampleBurgers={this.loadSampleBurgers}
