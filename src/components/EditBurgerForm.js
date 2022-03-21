@@ -1,14 +1,13 @@
 import React from "react";
 
 class EditBurgerForm extends React.Component {
-    handleChange = event => {
-        
-        const updateBurger = {
-            ...this.props.burger,
-             [event.currentTarget.name]:event.currentTarget.value,
-        };
-       this.props.updateBurger(this.props.index,updateBurger)
-    }
+  handleChange = (event) => {
+    const updateBurger = {
+      ...this.props.burger,
+      [event.currentTarget.name]: event.currentTarget.value,
+    };
+    this.props.updateBurger(this.props.index, updateBurger);
+  };
   render() {
     return (
       <div className="burger-edit">
@@ -44,6 +43,9 @@ class EditBurgerForm extends React.Component {
           type="text"
           value={this.props.burger.image}
         />
+        <button onClick={() => this.props.deleteBurger(this.props.index)}>
+          Удалить из меню
+        </button>
       </div>
     );
   }
