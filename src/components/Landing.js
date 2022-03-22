@@ -1,7 +1,11 @@
 import React from "react";
 import restaurants from '../sample-restaurants'
+import propTypes from "prop-types";
 
 class Landing extends React.Component {
+  static propTypes = {
+    history: propTypes.object
+  };
   state = {
     display:false,
     title:'',

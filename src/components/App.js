@@ -1,4 +1,5 @@
 import React from "react";
+import propTypes from "prop-types";
 import Header from "./Header";
 import MenuAdmin from "./MenuAdmin";
 import Order from "./Order";
@@ -6,7 +7,12 @@ import sampleBurgers from "../sample-burgers";
 import Burger from "./Burger";
 import base from "../base";
 
+
+
 class App extends React.Component {
+  static propTypes = {
+    match: propTypes.object
+  };
   state = {
     burgers: {},
     order: {},
@@ -69,7 +75,7 @@ class App extends React.Component {
      //1.Делаем копию объекта state
      const order = { ...this.state.order };
      //2.Удаляем бургер 
- delete order [key];
+ delete order[key];
   //3.Записать наш новый обьект order в state
   this.setState({ order });
   }
