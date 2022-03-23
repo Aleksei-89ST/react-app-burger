@@ -1,6 +1,7 @@
 import Rebase from "re-base";
 import firebase from "firebase/app";
-require('firebase/database');
+import 'firebase/database';
+import 'firebase/auth';
 
 //создали базу данных.указал все свойства для связи с базой данных firebase
 const firebaseApp = firebase.initializeApp({

@@ -6,6 +6,9 @@ import Order from "./Order";
 import sampleBurgers from "../sample-burgers";
 import Burger from "./Burger";
 import base from "../base";
+import firebase from "firebase/app";
+import SignIn from "./Auth/SignIn";
+
 
 
 
@@ -79,8 +82,13 @@ class App extends React.Component {
   //3.Записать наш новый обьект order в state
   this.setState({ order });
   }
+  handleLogout = async () => {
+    await firebase.auth().signOut();
+    window.location.reload();
+  }
   render() {
     return (
+      <SignIn>
       <div className="burger-paradise">
         <div className="menu">
           <Header title="Very Hot Burger" />
@@ -104,8 +112,10 @@ class App extends React.Component {
           burgers= {this.state.burgers}
           updateBurger={this.updateBurger}
           deleteBurger={this.deleteBurger}
+          handleLogout={this.handleLogout}
         />
       </div>
+      </SignIn>
     );
   }
 }
