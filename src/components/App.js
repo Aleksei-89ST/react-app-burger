@@ -9,12 +9,9 @@ import base from "../base";
 import firebase from "firebase/app";
 import SignIn from "./Auth/SignIn";
 
-
-
-
 class App extends React.Component {
   static propTypes = {
-    match: propTypes.object
+    match: propTypes.object,
   };
   state = {
     burgers: {},
@@ -47,22 +44,22 @@ class App extends React.Component {
     //3.Записать наш новый обьект бургерс в state
     this.setState({ burgers });
   };
-  updateBurger = (key , updateBurger) => {
-     //1.Делаем копию объекта state
-     const burgers = { ...this.state.burgers };
-     //2.Обновляем нужный burger
-     burgers[key] = updateBurger;
-      //3.Записать наш новый обьект бургерс в state
-    this.setState({ burgers });
-  }
-  deleteBurger = (key) => {
- //1.Делаем копию объекта state
- const burgers = { ...this.state.burgers };
- //2.Удаляем бургер 
- burgers[key] = null;
+  updateBurger = (key, updateBurger) => {
+    //1.Делаем копию объекта state
+    const burgers = { ...this.state.burgers };
+    //2.Обновляем нужный burger
+    burgers[key] = updateBurger;
     //3.Записать наш новый обьект бургерс в state
     this.setState({ burgers });
-  }
+  };
+  deleteBurger = (key) => {
+    //1.Делаем копию объекта state
+    const burgers = { ...this.state.burgers };
+    //2.Удаляем бургер
+    burgers[key] = null;
+    //3.Записать наш новый обьект бургерс в state
+    this.setState({ burgers });
+  };
   loadSampleBurgers = () => {
     this.setState({ burgers: sampleBurgers });
   };
@@ -75,46 +72,50 @@ class App extends React.Component {
     this.setState({ order });
   };
   deleteFromOrder = (key) => {
-     //1.Делаем копию объекта state
-     const order = { ...this.state.order };
-     //2.Удаляем бургер 
- delete order[key];
-  //3.Записать наш новый обьект order в state
-  this.setState({ order });
-  }
+    //1.Делаем копию объекта state
+    const order = { ...this.state.order };
+    //2.Удаляем бургер
+    delete order[key];
+    //3.Записать наш новый обьект order в state
+    this.setState({ order });
+  };
   handleLogout = async () => {
     await firebase.auth().signOut();
     window.location.reload();
-  }
+  };
   render() {
     return (
       <SignIn>
-      <div className="burger-paradise">
-        <div className="menu">
-          <Header title="Very Hot Burger" />
-          <ul className="burgers">
-            {Object.keys(this.state.burgers).map((key) => {
-              return (
-                <Burger
-                  key={key}
-                  index={key}
-                  addToOrder={this.addToOrder}
-                  details={this.state.burgers[key]}
-                />
-              );
-            })}
-          </ul>
+        <div className="burger-paradise">
+          <div className="menu">
+            <Header title="Very Hot Burger" />
+            <ul className="burgers">
+              {Object.keys(this.state.burgers).map((key) => {
+                return (
+                  <Burger
+                    key={key}
+                    index={key}
+                    addToOrder={this.addToOrder}
+                    details={this.state.burgers[key]}
+                  />
+                );
+              })}
+            </ul>
+          </div>
+          <Order
+            burgers={this.state.burgers}
+            order={this.state.order}
+            deleteFromOrder={this.deleteFromOrder}
+          />
+          <MenuAdmin
+            addBurger={this.addBurger}
+            loadSampleBurgers={this.loadSampleBurgers}
+            burgers={this.state.burgers}
+            updateBurger={this.updateBurger}
+            deleteBurger={this.deleteBurger}
+            handleLogout={this.handleLogout}
+          />
         </div>
-        <Order burgers={this.state.burgers} order={this.state.order} deleteFromOrder={this.deleteFromOrder}/>
-        <MenuAdmin
-          addBurger={this.addBurger}
-          loadSampleBurgers={this.loadSampleBurgers}
-          burgers= {this.state.burgers}
-          updateBurger={this.updateBurger}
-          deleteBurger={this.deleteBurger}
-          handleLogout={this.handleLogout}
-        />
-      </div>
       </SignIn>
     );
   }
